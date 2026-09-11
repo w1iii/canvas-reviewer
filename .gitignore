@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+
+# Database
+*.db
+*.sqlite3
+
+# Output
+output/
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary
+.tmp/
+*.tmp

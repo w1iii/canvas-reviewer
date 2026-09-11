@@ -1,0 +1,63 @@
+services:
+  app:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - ollama
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://user:pass@postgres:5432/canvas_reviewer
+      - REDIS_URL=redis://redis:6379
+      - OLLAMA_URL=http://ollama:11434
+    volumes:
+      - output_data:/app/output
+
+  worker:
+    build: ./backend
+    command: arq app.tasks.WorkerSettings
+    depends_on:
+      - redis
+      - ollama
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://user:pass@postgres:5432/canvas_reviewer
+      - REDIS_URL=redis://redis:6379
+      - OLLAMA_URL=http://ollama:11434
+    volumes:
+      - output_data:/app/output
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: canvas_reviewer
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - app
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  output_data:
+  postgres_data:
+  ollama_data:

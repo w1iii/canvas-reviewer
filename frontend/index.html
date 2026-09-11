@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas LMS Reviewer Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Canvas LMS Reviewer Generator</h1>
+
+        <!-- Step 1: Login -->
+        <section id="login-section">
+            <h2>Connect to Canvas</h2>
+            <form id="login-form">
+                <label for="canvas-url">Canvas URL</label>
+                <input type="url" id="canvas-url" placeholder="https://your-school.instructure.com" required>
+
+                <label for="canvas-token">API Token</label>
+                <input type="password" id="canvas-token" placeholder="Enter your Canvas API token" required>
+
+                <button type="submit">Connect</button>
+            </form>
+            <p id="login-status"></p>
+        </section>
+
+        <!-- Step 2: Course Selection -->
+        <section id="courses-section" class="hidden">
+            <h2>Select Courses</h2>
+            <div id="courses-list"></div>
+            <button id="generate-btn">Generate Reviewers</button>
+        </section>
+
+        <!-- Step 3: Progress -->
+        <section id="progress-section" class="hidden">
+            <h2>Generating Reviewers...</h2>
+            <div id="progress-list"></div>
+        </section>
+
+        <!-- Step 4: Download -->
+        <section id="download-section" class="hidden">
+            <h2>Download Reviewers</h2>
+            <div id="download-list"></div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
