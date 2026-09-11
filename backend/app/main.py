@@ -3,6 +3,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, StreamingResponse
+from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -15,6 +16,23 @@ from app.models import ReviewerJob, ReviewerResult, User
 from app.scraper import CanvasClient
 
 app = FastAPI(title="Canvas LMS Reviewer Generator")
+
+Instrumentator().instrument(app).expose(app)
+
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
+
+@app.get("/health/ready")
+async def readiness():
+    try:
+        async with AsyncSession(engine) as session:
+            await session.exec(select(User).limit(1))
+        return {"status": "ready", "database": "ok"}
+    except Exception as e:
+        raise HTTPException(status_code=503, detail={"status": "not ready", "error": str(e)})
 
 
 class ValidateRequest(BaseModel):

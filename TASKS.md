@@ -63,11 +63,11 @@
 - [x] 9.1 Multi-stage Dockerfile
 - [x] 9.2 Docker Compose (app, worker, redis, postgres, nginx)
 - [x] 9.3 Nginx reverse proxy config
-- [ ] 9.4 Health checks
-- [ ] 9.5 Monitoring (Prometheus)
+- [x] 9.4 Health checks
+- [x] 9.5 Monitoring (Prometheus)
 - [x] 9.6 README documentation
 
 ---
 
 **Estimated Timeline:** 18 days
-**Completed:** 34/37 tasks
+**Completed:** 37/37 tasks
